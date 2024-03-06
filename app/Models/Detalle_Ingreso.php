@@ -9,7 +9,11 @@ class Detalle_Ingreso extends Model
 {
     public $timestamps= false;
     use HasFactory;
+
+    protected $table='detalle_ingresos';
+    
     protected $fillable = [
+        'articulos_id',
         'precio_compra', 
         'precio_venta', 
         'stock_inicial', 

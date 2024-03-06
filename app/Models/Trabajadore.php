@@ -22,4 +22,9 @@ class Trabajadore extends Model
         'usuario', 
         'password'
     ];
+
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class);
+    }
 }

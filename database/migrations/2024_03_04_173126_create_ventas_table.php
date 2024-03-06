@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('correlativo');
             $table->string('igv');
             $table->string('estado');
-            
+            $table->timestamps();
         });
     }
 

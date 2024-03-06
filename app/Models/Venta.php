@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Venta extends Model
 {
-    public $timestamps= false;
+    public $timestamps= true;
     use HasFactory;
 
     protected $fillable = [
+        'cliente_id',
+        'trabajadores_id',
         'fecha',
          'tipo_comprobante', 
          'serie', 

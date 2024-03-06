@@ -13,7 +13,7 @@ class VentaController extends Controller
     public function index()
     {
         $ventas = Venta::all();
-        return response()->json([ 'Ventas' => $ventas], 201); 
+        return response()->json($ventas);
     }
 
     /**
@@ -29,22 +29,34 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        $ventas = Venta::create($request->all());
-        return response()->json(['Ventas: ' => $ventas]);    }
+        $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'trabajadores_id' => 'required|exists:trabajadores,id',
+            'fecha' => 'required|date',
+            'tipo_comprobante' => 'required|string',
+            'serie' => 'required|string',
+            'correlativo' => 'required|string',
+            'igv' => 'required|string',
+            'estado' => 'required|string',
+        ]);
+
+        $venta = Venta::create($request->all());
+        return response()->json(['venta' => $venta]);
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show($id)
     {
-        $ventas = Venta::findOrFail($id);
-        return response()->json(['Venta:' => $ventas]);
+        $venta = Venta::findOrFail($id);
+        return response()->json($venta);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Venta $ventas)
+    public function edit(Venta $venta)
     {
         //
     }
@@ -54,18 +66,29 @@ class VentaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ventas = Venta::findOrFail($id);
-        $ventas->update($request->all());
-        return response()->json(['Ventas: ' => $ventas]);
+        $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'trabajadores_id' => 'required|exists:trabajadores,id',
+            'fecha' => 'required|date',
+            'tipo_comprobante' => 'required|string',
+            'serie' => 'required|string',
+            'correlativo' => 'required|string',
+            'igv' => 'required|string',
+            'estado' => 'required|string',
+        ]);
+
+        $venta = Venta::findOrFail($id);
+        $venta->update($request->all());
+        return response()->json(['venta' => $venta]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
-        $ventas = Venta::findOrFail($id);
-        $ventas->delete();
-        return response()->json(['message' => 'Venta eliminada correctamente']);
+        $venta = Venta::findOrFail($id);
+        $venta->delete();
+        return 'El registro se borró correctamente';
     }
 }
